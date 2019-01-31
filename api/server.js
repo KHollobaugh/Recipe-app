@@ -15,4 +15,12 @@ server.get('/', (req, res) => {
     res.send(`Api running on port ${port}`)
 })
 
+server.get('/api/recipes', (req, res) => {
+    db('recipes')
+    .then(notes => res.status(200).json(notes))
+    .catch(error => res.status(500).json({
+        message: 'failed to get notes'
+    }))
+})
+
 module.exports = server;
