@@ -64,4 +64,18 @@ server.put('/api/recipes/:id', (req, res) => {
     .catch(error => res.status(500).json({ message: `Failed to edit note #${id}`}))
 })
 
+//DELETE note by id
+
+server.delete('/api/recipes/:id', (req, res) => {
+    const { id } = req.params;
+    db('recipes')
+    .where({ id: id })
+    .del()
+    .then(count => res.status(200).json(count))
+    .catch(err => {
+        res.status(401).json({ message: `Failed to delete recipe #${id}`})
+    })
+    .catch(err => res.json(err))
+})
+
 module.exports = server;
