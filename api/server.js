@@ -50,4 +50,18 @@ server.post('/api/recipes', (req, res) => {
     }))
 })
 
+//PUT - edit an existing recipe
+
+server.put('/api/recipes/:id', (req, res) => {
+    const changes = req.body;
+    const { id } = req.params;
+    db('recipes')
+    .where({ id: id })
+    .update(changes)
+    .then(count => {
+        res.status(200).json({ count })
+    })
+    .catch(error => res.status(500).json({ message: `Failed to edit note #${id}`}))
+})
+
 module.exports = server;
