@@ -36,4 +36,18 @@ server.get('/api/recipes/:id', (req, res) => {
     .catch(error => res.status(500).json({ message: `failed to get recipe by id ${id}`}))
 })
 
+//POST a new recipe with title, body, and link
+
+server.post('/api/recipes', (req, res) => {
+    const body = req.body;
+    db('recipes')
+    .insert(body)
+    .then(ids => {
+        res.status(201).json(ids);
+    })
+    .catch(error => res.status(500).json({
+        message: 'Error posting new recipe'
+    }))
+})
+
 module.exports = server;
